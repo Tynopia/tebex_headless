@@ -138,23 +138,9 @@ export interface CreatorCode {
  * @returns {Promise<T>}
  */
 export async function Request<T, Body>(method: Method | string, route: Route, path: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
-    let paramString = "";
-
-    if (params) {
-        paramString = Object.entries(params)
-            .filter(([_, value]) => value)
-            .map(([key, value]) => {
-                if (typeof value === "boolean") {
-                    value = value ? 1 : 0;
-                }
-
-                return [key, value].join("=")
-            })
-            .join("=");
-    }
-    
-    const response = await axios.request<T, T>({
-        url: `${baseUrl}/api/${route}/${webstoreIdentifier}${path}?${paramString}`,
+    const response = await axios.request<T>({
+        url: `${baseUrl}/api/${route}/${webstoreIdentifier}${path}`,
+        params: params,
         method: method,
         data: body,
         headers: {
@@ -162,7 +148,7 @@ export async function Request<T, Body>(method: Method | string, route: Route, pa
         }
     });
 
-    return response;
+    return response.data;
 }
 
 /**
