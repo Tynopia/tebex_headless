@@ -181,12 +181,14 @@ export type Category = BaseItem & {
  * 
  * @returns {Promise<Data<Category[]>>}
  */
-export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Data<Category[]>> {
-    return await Request("get", "accounts", "/categories", {
+export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
+    const { data }: Data<Category[]> = await Request("get", "accounts", "/categories", {
         includePackages,
         basketIdent,
         ipAddress 
-    });
+    })
+    
+    return data;
 }
 
 /**
@@ -200,12 +202,14 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
  * 
  * @returns {Promise<Data<Category>>}
  */
-export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Data<Category>> {
-    return await Request("get", "accounts", `/categories/${id}`, {
+export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
+    const { data }: Data<Category> = await Request("get", "accounts", `/categories/${id}`, {
         includePackages,
         basketIdent,
         ipAddress 
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -283,11 +287,13 @@ export type Package = BaseItem & {
  * 
  * @returns {Promise<Data<Package>>}
  */
-export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Data<Package>> {
-    return await Request("get", "accounts", `/packages/${id}`, {
+export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
+    const { data }: Data<Package> = await Request("get", "accounts", `/packages/${id}`, {
         basketIdent,
         ipAddress 
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -299,11 +305,13 @@ export async function GetPackage(id: number, basketIdent?: string, ipAddress?: s
  * 
  * @returns {Promise<Data<Package[]>>}
  */
-export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Data<Package[]>> {
-    return await Request("get", "accounts", `/packages`, {
+export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
+    const { data }: Data<Package[]> = await Request("get", "accounts", `/packages`, {
         basketIdent,
         ipAddress 
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -403,8 +411,9 @@ export interface Basket {
  * 
  * @returns {Promise<Data<Package[]>>}
  */
-export async function GetBasket(basketIdent: string): Promise<Data<Basket>> {
-    return await Request("get", "accounts", `/baskets/${basketIdent}`);
+export async function GetBasket(basketIdent: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("get", "accounts", `/baskets/${basketIdent}`);
+    return data;
 }
 
 /**
@@ -427,8 +436,9 @@ export type Urls = {
  * 
  * @returns {Promise<Data<Basket>>}
  */
-export async function CreateBasket(urls: Urls): Promise<Data<Basket>> {
-    return await Request<Data<Basket>, Urls>("post", "accounts", "/baskets", urls);
+export async function CreateBasket(urls: Urls): Promise<Basket> {
+    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", "accounts", "/baskets", urls);
+    return data;
 }
 
 /**
@@ -483,12 +493,14 @@ export interface PackageBody {
  * 
  * @returns {Promise<Data<Package>>}
  */
-export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Data<Package>> {
-    return await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
+export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Package> {
+    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
         package_id,
         quantity,
         type
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -501,11 +513,13 @@ export async function AddPackageToBasket(basketIdent: string, package_id: number
  * 
  * @returns {Promise<Data<Package>>}
  */
-export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Data<Package>> {
-    return await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
+export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Package> {
+    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
         package_id,
         target_username_id
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -517,10 +531,12 @@ export async function GiftPackage(basketIdent: string, package_id: number, targe
  * 
  * @returns {Promise<Data<Package>>}
  */
-export async function RemovePackage(basketIdent: string, package_id: number): Promise<Data<Package>> {
-    return await Request("post", "baskets", `/baskets/${basketIdent}/packages/remove`, {}, {
+export async function RemovePackage(basketIdent: string, package_id: number): Promise<Package> {
+    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages/remove`, {}, {
         package_id
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -533,10 +549,12 @@ export async function RemovePackage(basketIdent: string, package_id: number): Pr
  * 
  * @returns {Promise<Data<Package>>}
  */
-export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Data<Package>> {
-    return await Request("post", "baskets", `/baskets/${basketIdent}/packages/${package_id}`, {}, {
+export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Package> {
+    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages/${package_id}`, {}, {
         quantity
-    });
+    })
+
+    return data;
 }
 
 /**
@@ -571,6 +589,7 @@ export interface Webstore {
  * 
  * @returns {Promise<Data<Webstore>>}
  */
-export async function GetWebstore(): Promise<Data<Webstore>> {
-    return await Request("get", "accounts", "");
+export async function GetWebstore(): Promise<Webstore> {
+    const { data }: Data<Webstore> = await Request("get", "accounts", "/webstore");
+    return data;
 }
