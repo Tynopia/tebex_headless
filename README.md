@@ -1,6 +1,6 @@
 # Tebex Headless API Wrapper
 
-![Tebex Headless](https://www.gitbook.com/cdn-cgi/image/width=256,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F1785315218-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FaRz9HUAxrYuZsSDWhYnu%252Flogo%252FSSLScS9oAZjiUBkr89EK%252FOW_Dev_Logo_desktop%25402x.png%3Falt%3Dmedia%26token%3Ddcd44482-188c-4d07-bafe-a8f714fbc691)
+![Tebex Headless](https://cdn.discordapp.com/attachments/819864517680562198/1179556907975974952/tebex.png?ex=657a36f9&is=6567c1f9&hm=6d8af61b0fadf03cb0acfe2b086667f66fca0eecf0608cac570dd1cdb9ba03ea&)
 
 Welcome to the Tebex Headless API Wrapper! This Node.js TypeScript library allows you to seamlessly integrate Tebex into your projects and build a custom storefront without revealing your use of Tebex.
 
