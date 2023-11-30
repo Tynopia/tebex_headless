@@ -138,6 +138,14 @@ export interface CreatorCode {
  * @returns {Promise<T>}
  */
 export async function Request<T, Body>(method: Method | string, route: Route, path: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
+    if (params) {
+        for (const [key, value] of Object.entries(params)) {
+            if (typeof value === "boolean") {
+                params[key] = value ? 1 : 0;
+            }
+        }
+    }
+
     const response = await axios.request<T>({
         url: `${baseUrl}/api/${route}/${webstoreIdentifier}${path}`,
         params: params,
