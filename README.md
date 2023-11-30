@@ -1,6 +1,6 @@
 # Tebex Headless API Wrapper
 
-![Tebex Headless](https://cdn.discordapp.com/attachments/819864517680562198/1179556907975974952/tebex.png?ex=657a36f9&is=6567c1f9&hm=6d8af61b0fadf03cb0acfe2b086667f66fca0eecf0608cac570dd1cdb9ba03ea&)
+![Tebex Headless](https://cdn.discordapp.com/attachments/819864517680562198/1179846599543898122/tebex.png?ex=657b44c5&is=6568cfc5&hm=3088d82d0954d66cc0d4436f612011596bfb1583d229abae14a8d655e040ee8f&)
 
 Welcome to the Tebex Headless API Wrapper! This Node.js TypeScript library allows you to seamlessly integrate Tebex into your projects and build a custom storefront without revealing your use of Tebex.
 
@@ -47,7 +47,7 @@ async GetPackages(basketIdent?: string, ipAddress?: string)
 async GetBasket(basketIdent: string)
 
 // Create a basket and provide complete and cancel URLs
-async CreateBasket(urls: Urls)
+async CreateBasket(complete_url: string, cancel_url: string)
 
 // Get all auth URLs by a basket
 async GetBasketAuthUrl(basketIdent: string, returnUrl: string)
