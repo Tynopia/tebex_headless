@@ -452,8 +452,12 @@ export type Urls = {
  * 
  * @returns {Promise<Data<Basket>>}
  */
-export async function CreateBasket(urls: Urls): Promise<Basket> {
-    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", "accounts", "/baskets", urls);
+export async function CreateBasket(complete_url: string, cancel_url: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", "accounts", "/baskets", {
+        complete_url,
+        cancel_url
+    });
+    
     return data;
 }
 
