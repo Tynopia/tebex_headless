@@ -137,7 +137,7 @@ export interface CreatorCode {
  * 
  * @returns {Promise<T>}
  */
-export async function Request<T, Body>(method: Method | string, route: Route, path: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
+export async function Request<T, Body>(method: Method | string, identifier: string | null, route: Route, path: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
     if (params) {
         for (const [key, value] of Object.entries(params)) {
             if (typeof value === "boolean") {
@@ -147,7 +147,7 @@ export async function Request<T, Body>(method: Method | string, route: Route, pa
     }
 
     const response = await axios.request<T>({
-        url: `${baseUrl}/api/${route}/${webstoreIdentifier}${path}`,
+        url: `${baseUrl}/api/${route}/${identifier}${path}`,
         params: params,
         method: method,
         data: body,
@@ -190,7 +190,7 @@ export type Category = BaseItem & {
  * @returns {Promise<Data<Category[]>>}
  */
 export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
-    const { data }: Data<Category[]> = await Request("get", "accounts", "/categories", {
+    const { data }: Data<Category[]> = await Request("get", webstoreIdentifier, "accounts", "/categories", {
         includePackages,
         basketIdent,
         ipAddress 
@@ -211,7 +211,7 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
  * @returns {Promise<Data<Category>>}
  */
 export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
-    const { data }: Data<Category> = await Request("get", "accounts", `/categories/${id}`, {
+    const { data }: Data<Category> = await Request("get", webstoreIdentifier, "accounts", `/categories/${id}`, {
         includePackages,
         basketIdent,
         ipAddress 
@@ -231,7 +231,7 @@ export async function GetCategory(id: number, includePackages?: boolean, basketI
  * @returns {Promise<Message>}
  */
 export async function Apply<T>(t: T, basketIdent: string, type: ApplyType): Promise<Message> {
-    return await Request<Message, T>("post", "accounts", `/baskets/${basketIdent}/${type}`, {}, t);
+    return await Request<Message, T>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}`, {}, t);
 }
 
 /**
@@ -245,7 +245,7 @@ export async function Apply<T>(t: T, basketIdent: string, type: ApplyType): Prom
  * @returns {Promise<Message>}
  */
 export async function Remove<T>(t: T, basketIdent: string, type: ApplyType): Promise<Message> {
-    return await Request<Message, T>("post", "accounts", `/baskets/${basketIdent}/${type}/remove`, {}, t);
+    return await Request<Message, T>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}/remove`, {}, t);
 }
 
 /**
@@ -304,7 +304,7 @@ export type Package = BaseItem & {
  * @returns {Promise<Data<Package>>}
  */
 export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
-    const { data }: Data<Package> = await Request("get", "accounts", `/packages/${id}`, {
+    const { data }: Data<Package> = await Request("get", webstoreIdentifier, "accounts", `/packages/${id}`, {
         basketIdent,
         ipAddress 
     })
@@ -322,7 +322,7 @@ export async function GetPackage(id: number, basketIdent?: string, ipAddress?: s
  * @returns {Promise<Data<Package[]>>}
  */
 export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
-    const { data }: Data<Package[]> = await Request("get", "accounts", `/packages`, {
+    const { data }: Data<Package[]> = await Request("get", webstoreIdentifier, "accounts", `/packages`, {
         basketIdent,
         ipAddress 
     })
@@ -428,7 +428,7 @@ export interface Basket {
  * @returns {Promise<Data<Package[]>>}
  */
 export async function GetBasket(basketIdent: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request("get", "accounts", `/baskets/${basketIdent}`);
+    const { data }: Data<Basket> = await Request("get", webstoreIdentifier, "accounts", `/baskets/${basketIdent}`);
     return data;
 }
 
@@ -453,7 +453,7 @@ export type Urls = {
  * @returns {Promise<Data<Basket>>}
  */
 export async function CreateBasket(complete_url: string, cancel_url: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", "accounts", "/baskets", {
+    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", webstoreIdentifier, "accounts", "/baskets", {
         complete_url,
         cancel_url
     });
@@ -483,7 +483,7 @@ export interface AuthUrl {
  * @returns {Promise<AuthUrl[]>} The data returned or an axios error
  */
 export async function GetBasketAuthUrl(basketIdent: string, returnUrl: string): Promise<AuthUrl[]> {
-    return await Request("get", "accounts", `/baskets/${basketIdent}/auth`, {}, {
+    return await Request("get", basketIdent, "accounts", `/baskets/${basketIdent}/auth`, {}, {
         returnUrl
     });
 }
@@ -514,7 +514,7 @@ export interface PackageBody {
  * @returns {Promise<Data<Package>>}
  */
 export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages`, {}, {
+    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         quantity,
         type
@@ -534,7 +534,7 @@ export async function AddPackageToBasket(basketIdent: string, package_id: number
  * @returns {Promise<Data<Package>>}
  */
 export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages`, {}, {
+    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         target_username_id
     })
@@ -552,7 +552,7 @@ export async function GiftPackage(basketIdent: string, package_id: number, targe
  * @returns {Promise<Data<Package>>}
  */
 export async function RemovePackage(basketIdent: string, package_id: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages/remove`, {}, {
+    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages/remove", {}, {
         package_id
     })
 
@@ -570,7 +570,7 @@ export async function RemovePackage(basketIdent: string, package_id: number): Pr
  * @returns {Promise<Data<Package>>}
  */
 export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages/${package_id}`, {}, {
+    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", `/packages/${package_id}`, {}, {
         quantity
     })
 
@@ -610,6 +610,6 @@ export interface Webstore {
  * @returns {Promise<Data<Webstore>>}
  */
 export async function GetWebstore(): Promise<Webstore> {
-    const { data }: Data<Webstore> = await Request("get", "accounts", "/webstore");
+    const { data }: Data<Webstore> = await Request("get", webstoreIdentifier, "accounts", "/webstore");
     return data;
 }
