@@ -514,7 +514,7 @@ export interface PackageBody {
  * @returns {Promise<Data<Package>>}
  */
 export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
+    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages`, {}, {
         package_id,
         quantity,
         type
@@ -534,7 +534,7 @@ export async function AddPackageToBasket(basketIdent: string, package_id: number
  * @returns {Promise<Data<Package>>}
  */
 export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages`, {}, {
+    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages`, {}, {
         package_id,
         target_username_id
     })
@@ -552,7 +552,7 @@ export async function GiftPackage(basketIdent: string, package_id: number, targe
  * @returns {Promise<Data<Package>>}
  */
 export async function RemovePackage(basketIdent: string, package_id: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages/remove`, {}, {
+    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages/remove`, {}, {
         package_id
     })
 
@@ -570,7 +570,7 @@ export async function RemovePackage(basketIdent: string, package_id: number): Pr
  * @returns {Promise<Data<Package>>}
  */
 export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", "baskets", `/baskets/${basketIdent}/packages/${package_id}`, {}, {
+    const { data }: Data<Package> = await Request("post", "baskets", `/${basketIdent}/packages/${package_id}`, {}, {
         quantity
     })
 
