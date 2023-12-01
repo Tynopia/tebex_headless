@@ -187,7 +187,7 @@ export type Category = BaseItem & {
  * @param {string} basketIdent The identifier of the basket
  * @param {string} ipAddress The IP address of the user
  * 
- * @returns {Promise<Data<Category[]>>}
+ * @returns {Promise<Category[]>}
  */
 export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
     const { data }: Data<Category[]> = await Request("get", webstoreIdentifier, "accounts", "/categories", {
@@ -208,7 +208,7 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
  * @param {string} basketIdent The identifier of the basket
  * @param {string} ipAddress The IP address of the user
  * 
- * @returns {Promise<Data<Category>>}
+ * @returns {Promise<Category>}
  */
 export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
     const { data }: Data<Category> = await Request("get", webstoreIdentifier, "accounts", `/categories/${id}`, {
@@ -301,7 +301,7 @@ export type Package = BaseItem & {
  * @param {string} basketIdent The identifier of the basket
  * @param {string} ipAddress The IP address of the user
  * 
- * @returns {Promise<Data<Package>>}
+ * @returns {Promise<Package>}
  */
 export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
     const { data }: Data<Package> = await Request("get", webstoreIdentifier, "accounts", `/packages/${id}`, {
@@ -319,7 +319,7 @@ export async function GetPackage(id: number, basketIdent?: string, ipAddress?: s
  * @param {string} basketIdent The identifier of the basket
  * @param {string} ipAddress The IP address of the user
  * 
- * @returns {Promise<Data<Package[]>>}
+ * @returns {Promise<Package[]>}
  */
 export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
     const { data }: Data<Package[]> = await Request("get", webstoreIdentifier, "accounts", `/packages`, {
@@ -425,7 +425,7 @@ export interface Basket {
  * 
  * @param {string} basketIdent The identifier of the basket
  * 
- * @returns {Promise<Data<Package[]>>}
+ * @returns {Promise<Package[]>}
  */
 export async function GetBasket(basketIdent: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request("get", webstoreIdentifier, "accounts", `/baskets/${basketIdent}`);
@@ -448,9 +448,10 @@ export type Urls = {
  * @function CreateBasket
  * @description A function to create a basket from the Tebex Headless API
  * 
- * @param {Urls} urls The urls object for the complete and cancel urls
+ * @param {string} complete_url The complete url
+ * @param {string} cancel_url The cancel url
  * 
- * @returns {Promise<Data<Basket>>}
+ * @returns {Promise<Basket>}
  */
 export async function CreateBasket(complete_url: string, cancel_url: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", webstoreIdentifier, "accounts", "/baskets", {
@@ -511,10 +512,10 @@ export interface PackageBody {
  * @param {number} quantity The quantity of the package
  * @param {PackageType} type The type of the package
  * 
- * @returns {Promise<Data<Package>>}
+ * @returns {Promise<Basket>}
  */
-export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages", {}, {
+export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         quantity,
         type
@@ -531,10 +532,10 @@ export async function AddPackageToBasket(basketIdent: string, package_id: number
  * @param {number} package_id The ID of the package
  * @param {string} target_username_id The ID of the user to gift the package to
  * 
- * @returns {Promise<Data<Package>>}
+ * @returns {Promise<Basket>}
  */
-export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages", {}, {
+export async function GiftPackage(basketIdent: string, package_id: number, target_username_id: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         target_username_id
     })
@@ -549,10 +550,10 @@ export async function GiftPackage(basketIdent: string, package_id: number, targe
  * @param {string} basketIdent The identifier of the basket
  * @param {number} package_id The ID of the package
  * 
- * @returns {Promise<Data<Package>>}
+ * @returns {Promise<Basket>}
  */
-export async function RemovePackage(basketIdent: string, package_id: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", "/packages/remove", {}, {
+export async function RemovePackage(basketIdent: string, package_id: number): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", "/packages/remove", {}, {
         package_id
     })
 
@@ -567,10 +568,10 @@ export async function RemovePackage(basketIdent: string, package_id: number): Pr
  * @param {number} package_id The ID of the package
  * @param {number} quantity The quantity of the package
  * 
- * @returns {Promise<Data<Package>>}
+ * @returns {Promise<Basket>}
  */
-export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Package> {
-    const { data }: Data<Package> = await Request("post", basketIdent, "baskets", `/packages/${package_id}`, {}, {
+export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", `/packages/${package_id}`, {}, {
         quantity
     })
 
@@ -607,7 +608,7 @@ export interface Webstore {
  * @function GetWebstore
  * @description A function to get the webstore from the Tebex Headless API
  * 
- * @returns {Promise<Data<Webstore>>}
+ * @returns {Promise<Webstore>}
  */
 export async function GetWebstore(): Promise<Webstore> {
     const { data }: Data<Webstore> = await Request("get", webstoreIdentifier, "accounts", "/webstore");
