@@ -483,7 +483,7 @@ export interface AuthUrl {
  * @returns {Promise<AuthUrl[]>} The data returned or an axios error
  */
 export async function GetBasketAuthUrl(basketIdent: string, returnUrl: string): Promise<AuthUrl[]> {
-    return await Request("get", basketIdent, "accounts", `/baskets/${basketIdent}/auth`, {}, {
+    return await Request("get", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/auth`, {}, {
         returnUrl
     });
 }
