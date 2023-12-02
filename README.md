@@ -26,10 +26,10 @@ SetWebstoreIdentifier("your_public_token")
 
 ```typescript
 // Get all categories of the webstore
-async GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string)
+async GetCategories(includePackages?: boolean, basketIdent?: string, ip_address?: string)
 
 // Get a specific category by an id
-async GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string)
+async GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ip_address?: string)
 
 // Apply a coupon, gift card, or creator code
 async Apply<T>(t: T, basketIdent: string, type: ApplyType)
@@ -38,16 +38,16 @@ async Apply<T>(t: T, basketIdent: string, type: ApplyType)
 async Remove<T>(t: T, basketIdent: string, type: ApplyType)
 
 // Get a specific package by an id inside a basket
-async GetPackage(id: number, basketIdent?: string, ipAddress?: string)
+async GetPackage(id: number, basketIdent?: string, ip_address?: string)
 
 // Get all packages of the webstore inside a basket
-async GetPackages(basketIdent?: string, ipAddress?: string)
+async GetPackages(basketIdent?: string, ip_address?: string)
 
 // Get a basket by an identifier
 async GetBasket(basketIdent: string)
 
 // Create a basket and provide complete and cancel URLs
-async CreateBasket(complete_url: string, cancel_url: string)
+async CreateBasket(complete_url: string, cancel_url: string, ip_address?: string)
 
 // Get all auth URLs by a basket
 async GetBasketAuthUrl(basketIdent: string, returnUrl: string)
@@ -72,6 +72,20 @@ async GetWebstore()
 
 - **Seamless Integration:** Use Tebex functionalities in your project without exposing the fact that you are using Tebex.
 - **Custom Storefront:** Build your custom storefront by leveraging Tebex Headless API.
+
+
+## IP forwarding
+
+If a store uses its own backend but wants to use the IP addresses of the users instead of the server, Tebex a basic requires [authentication](https://documenter.getpostman.com/view/10912536/2s9XxvTEmh#intro).
+
+[Check our following Link to generate a private key](https://creator.tebex.io/developers/api-keys)
+
+```typescript
+import { SetWebstoreIdentifier, SetPrivateKey } from "tebex_headless";
+
+SetWebstoreIdentifier("your_public_token")
+SetPrivateKey("your_private_key")
+```
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-import axios, { Method } from "axios";
+import axios, { AxiosRequestConfig, Method } from "axios";
 
 /**
  * @constant baseUrl
@@ -26,6 +26,26 @@ export let webstoreIdentifier: string | null = null;
  */
 export function SetWebstoreIdentifier(identifier: string): void {
     webstoreIdentifier = identifier;
+}
+
+/**
+ * @var privateKey
+ * @description The private key of the webstore
+ * 
+ * @type {string | null}
+ */
+export let privateKey: string | null = null;
+
+/**
+ * @function SetPrivateKey
+ * @description A function to set the private key
+ * 
+ * @param {string} key The private key of the webstore
+ * 
+ * @returns {void}
+ */
+export function SetPrivateKey(key: string): void {
+    privateKey = key;
 }
 
 /**
@@ -127,6 +147,16 @@ export interface CreatorCode {
 }
 
 /**
+ * @interface IPAddress
+ * @description The IP address object for the body of the request
+ * 
+ * @param {string} ip_address The IP address of the user
+ */
+export interface IPAddress {
+    ip_address?: string
+}
+
+/**
  * @function Request
  * @description A function to make a request to the Tebex Headless API
  * 
@@ -146,7 +176,7 @@ export async function Request<T, Body>(method: Method, identifier: string | null
         }
     }
 
-    const response = await axios.request<T>({
+    const config: AxiosRequestConfig = {
         url: `${baseUrl}/api/${route}/${identifier}${path ?? ""}`,
         params: params,
         method: method,
@@ -154,7 +184,16 @@ export async function Request<T, Body>(method: Method, identifier: string | null
         headers: {
             "Content-Type": "application/json"
         }
-    });
+    }
+
+    if (webstoreIdentifier && privateKey) {
+        config.auth = {
+            username: webstoreIdentifier,
+            password: privateKey
+        }
+    }
+
+    const response = await axios.request<T>(config);
 
     return response.data;
 }
@@ -185,15 +224,16 @@ export type Category = BaseItem & {
  * 
  * @param {boolean} includePackages Whether to include the packages in the categories
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Category[]>}
  */
-export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
+export async function GetCategories(includePackages?: boolean, basketIdent?: string, ip_address?: string): Promise<Category[]> {
     const { data }: Data<Category[]> = await Request("get", webstoreIdentifier, "accounts", "/categories", {
         includePackages,
-        basketIdent,
-        ipAddress 
+        basketIdent
+    }, {
+        ip_address
     })
     
     return data;
@@ -206,15 +246,16 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
  * @param {number} id The ID of the category
  * @param {boolean} includePackages Whether to include the packages in the category
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Category>}
  */
-export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
+export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ip_address?: string): Promise<Category> {
     const { data }: Data<Category> = await Request("get", webstoreIdentifier, "accounts", `/categories/${id}`, {
         includePackages,
-        basketIdent,
-        ipAddress 
+        basketIdent
+    }, {
+        ip_address
     })
 
     return data;
@@ -299,14 +340,15 @@ export type Package = BaseItem & {
  * 
  * @param {number} id The ID of the package
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Package>}
  */
-export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
+export async function GetPackage(id: number, basketIdent?: string, ip_address?: string): Promise<Package> {
     const { data }: Data<Package> = await Request("get", webstoreIdentifier, "accounts", `/packages/${id}`, {
-        basketIdent,
-        ipAddress 
+        basketIdent
+    }, {
+        ip_address
     })
 
     return data;
@@ -317,14 +359,15 @@ export async function GetPackage(id: number, basketIdent?: string, ipAddress?: s
  * @description A function to get all packages from the Tebex Headless API
  * 
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Package[]>}
  */
-export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
+export async function GetPackages(basketIdent?: string, ip_address?: string): Promise<Package[]> {
     const { data }: Data<Package[]> = await Request("get", webstoreIdentifier, "accounts", `/packages`, {
-        basketIdent,
-        ipAddress 
+        basketIdent
+    }, {
+        ip_address
     })
 
     return data;
@@ -450,13 +493,16 @@ export type Urls = {
  * 
  * @param {string} complete_url The complete url
  * @param {string} cancel_url The cancel url
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request<Data<Basket>, Urls>("post", webstoreIdentifier, "accounts", "/baskets", {
+export async function CreateBasket(complete_url: string, cancel_url: string, ip_address?: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {
         complete_url,
         cancel_url
+    }, {
+        ip_address
     });
     
     return data;
