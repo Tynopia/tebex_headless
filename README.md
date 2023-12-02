@@ -76,7 +76,7 @@ async GetWebstore()
 
 ## IP forwarding
 
-If a store uses its own backend but wants to use the IP addresses of the users instead of the server, Tebex a basic requires [authentication](https://documenter.getpostman.com/view/10912536/2s9XxvTEmh#intro).
+If a store uses its own backend but wants to use the IP addresses of the users instead of the server, Tebex requires a basic [authentication](https://documenter.getpostman.com/view/10912536/2s9XxvTEmh#intro).
 
 [Check our following Link to generate a private key](https://creator.tebex.io/developers/api-keys)
 
