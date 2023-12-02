@@ -137,7 +137,7 @@ export interface CreatorCode {
  * 
  * @returns {Promise<T>}
  */
-export async function Request<T, Body>(method: Method | string, identifier: string | null, route: Route, path: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
+export async function Request<T, Body>(method: Method | string, identifier: string | null, route: Route, path?: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
     if (params) {
         for (const [key, value] of Object.entries(params)) {
             if (typeof value === "boolean") {
@@ -147,7 +147,7 @@ export async function Request<T, Body>(method: Method | string, identifier: stri
     }
 
     const response = await axios.request<T>({
-        url: `${baseUrl}/api/${route}/${identifier}${path}`,
+        url: `${baseUrl}/api/${route}/${identifier}${path ?? ""}`,
         params: params,
         method: method,
         data: body,
@@ -611,6 +611,6 @@ export interface Webstore {
  * @returns {Promise<Webstore>}
  */
 export async function GetWebstore(): Promise<Webstore> {
-    const { data }: Data<Webstore> = await Request("get", webstoreIdentifier, "accounts", "/webstore");
+    const { data }: Data<Webstore> = await Request("get", webstoreIdentifier, "accounts");
     return data;
 }
