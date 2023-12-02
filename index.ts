@@ -137,7 +137,7 @@ export interface CreatorCode {
  * 
  * @returns {Promise<T>}
  */
-export async function Request<T, Body>(method: Method | string, identifier: string | null, route: Route, path?: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
+export async function Request<T, Body>(method: Method, identifier: string | null, route: Route, path?: string, params?: KeyValuePair<string, GenericObject>, body?: Body): Promise<T> {
     if (params) {
         for (const [key, value] of Object.entries(params)) {
             if (typeof value === "boolean") {
@@ -571,7 +571,7 @@ export async function RemovePackage(basketIdent: string, package_id: number): Pr
  * @returns {Promise<Basket>}
  */
 export async function UpdateQuantity(basketIdent: string, package_id: number, quantity: number): Promise<Basket> {
-    const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", `/packages/${package_id}`, {}, {
+    const { data }: Data<Basket> = await Request("put", basketIdent, "baskets", `/packages/${package_id}`, {}, {
         quantity
     })
 
