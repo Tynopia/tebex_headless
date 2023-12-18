@@ -324,6 +324,7 @@ export type Package = BaseItem & {
     disable_gifting: boolean,
     disable_quantity: boolean,
     expiration_date: string | null,
+    currency: string,
     category: BaseItem,
     base_price: number,
     sales_tax: number,
@@ -484,7 +485,9 @@ export async function GetBasket(basketIdent: string): Promise<Basket> {
  */
 export type Urls = {
     complete_url: string,
-    cancel_url: string
+    cancel_url: string,
+    custom?: KeyValuePair<string, any>,
+    complete_auto_redirect?: boolean
 }
 
 /**
@@ -497,11 +500,12 @@ export type Urls = {
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string, ip_address?: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {
+export async function CreateBasket(complete_url: string, cancel_url: string, custom: KeyValuePair<string, any>, complete_auto_redirect: boolean, ip_address?: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
         complete_url,
-        cancel_url
-    }, {
+        cancel_url,
+        custom,
+        complete_auto_redirect,
         ip_address
     });
     
