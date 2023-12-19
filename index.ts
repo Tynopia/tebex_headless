@@ -496,17 +496,21 @@ export type Urls = {
  * 
  * @param {string} complete_url The complete url
  * @param {string} cancel_url The cancel url
+ * @param {KeyValuePair<string, any>} custom Custom metadata for the basket
+ * @param {string} complete_auto_redirect Whether to automatically redirect the user to the complete url
  * @param {string} ip_address The IP address of the user
+ * @param {string} username The username of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string, custom: KeyValuePair<string, any>, complete_auto_redirect: boolean, ip_address?: string): Promise<Basket> {
+export async function CreateBasket(complete_url: string, cancel_url: string, custom: KeyValuePair<string, any>, complete_auto_redirect: boolean, ip_address?: string, username?: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
         complete_url,
         cancel_url,
         custom,
         complete_auto_redirect,
-        ip_address
+        ip_address,
+        username
     });
     
     return data;
