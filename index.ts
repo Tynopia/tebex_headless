@@ -295,8 +295,9 @@ export async function Remove<T>(t: T, basketIdent: string, type: ApplyType): Pro
  * 
  * @param {string} subscription The subscription type
  * @param {string} single The single type
+ * @param {string} both The both type
  */
-export type PackageType = "subscription" | "single";
+export type PackageType = "subscription" | "single" | "both";
 
 /**
  * @interface Package
