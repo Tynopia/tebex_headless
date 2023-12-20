@@ -617,14 +617,16 @@ export interface PackageBody {
  * @param {number} package_id The ID of the package
  * @param {number} quantity The quantity of the package
  * @param {PackageType} type The type of the package
+ * @param {KeyValuePair<string, any>} variable_data The variable data of the package
  * 
  * @returns {Promise<Basket>}
  */
-export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType): Promise<Basket> {
+export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType, variable_data?: KeyValuePair<string, any>): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         quantity,
-        type
+        type,
+        variable_data
     })
 
     return data;

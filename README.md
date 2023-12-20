@@ -56,7 +56,7 @@ async CreateMinecraftBasket(username: string, complete_url: string, cancel_url: 
 async GetBasketAuthUrl(basketIdent: string, returnUrl: string)
 
 // Add a package to a specific basket
-async AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType)
+AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType, variable_data?: KeyValuePair<string, any>)
 
 // Gift a package to a target user
 async GiftPackage(basketIdent: string, package_id: number, target_username_id: string)
