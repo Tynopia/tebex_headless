@@ -1,23 +1,32 @@
 name: Release
-
-on:
-  push:
-    branches: [ main ]
-
+'on':
+    schedule:
+        - cron: 0 * * * *
+    push:
+        branches:
+            - main
 jobs:
-  release:
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-      - run: npm ci
-      - run: npm run build
-      - run: npx semantic-release
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    release:
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        environment: production
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Use Node.js
+                uses: actions/setup-node@v2
+            -   run: npm ci
+            -   run: npm run build
+            -   run: npm run test
+                env:
+                    PRIVATE_KEY: '${{ secrets.PRIVATE_KEY }}'
+                    CARD_NUMBER: '${{ vars.CARD_NUMBER }}'
+                    IP_ADDRESS: '${{ vars.IP_ADDRESS }}'
+                    PACKAGE_ID: '${{ vars.PACKAGE_ID }}'
+                    WEBSTORE_IDENTIFIER: '${{ vars.WEBSTORE_IDENTIFIER }}'
+            -   run: npx semantic-release
+                env:
+                    NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+                    GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'

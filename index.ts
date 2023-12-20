@@ -62,9 +62,11 @@ export interface Data<T> {
  * @interface Message
  * @description The message returned from the Tebex Headless API
  * 
+ * @param {boolean} success Whether the request was successful
  * @param {string} message The message returned from the Tebex Headless API
  */
 export interface Message {
+    success: boolean,
     message: string
 }
 
@@ -262,31 +264,47 @@ export async function GetCategory(id: number, includePackages?: boolean, basketI
 }
 
 /**
+ * @type {ApplyTypeToInterface}
+ * @description The type of the apply request
+ * 
+ * @param {string} coupons The coupons type
+ * @param {string} giftcards The giftcards type
+ * @param {string} creator-codes The creator codes type
+ * 
+ * @returns {CouponCode | GiftCardCode | CreatorCode}
+ */
+export type ApplyTypeToInterface<T extends ApplyType> =
+    T extends "coupons" ? CouponCode :
+    T extends "giftcards" ? GiftCardCode :
+    T extends "creator-codes" ? CreatorCode :
+    never;
+
+/**
  * @function Apply
  * @description A function to apply a coupon, giftcard or creator code to a basket
  * 
- * @param {T} t The body of the request
+ * @param {A} body The body of the request
  * @param {string} basketIdent The identifier of the basket
  * @param {ApplyType} type The type of the apply request
  * 
  * @returns {Promise<Message>}
  */
-export async function Apply<T>(t: T, basketIdent: string, type: ApplyType): Promise<Message> {
-    return await Request<Message, T>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}`, {}, t);
+export async function Apply<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A): Promise<Message> {
+    return await Request<Message, A>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}`, {}, body);
 }
 
 /**
  * @function Remove
  * @description A function to remove a coupon, giftcard or creator code from a basket
  * 
- * @param {T} t The body of the request
+ * @param {A} body The body of the request
  * @param {string} basketIdent The identifier of the basket
  * @param {ApplyType} type The type of the apply request
  * 
  * @returns {Promise<Message>}
  */
-export async function Remove<T>(t: T, basketIdent: string, type: ApplyType): Promise<Message> {
-    return await Request<Message, T>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}/remove`, {}, t);
+export async function Remove<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A): Promise<Message> {
+    return await Request<Message, A>("post", webstoreIdentifier, "accounts", `/baskets/${basketIdent}/${type}/remove`, {}, body);
 }
 
 /**
@@ -432,35 +450,45 @@ export interface Links {
  * @param {string} ident The identifier of the basket
  * @param {boolean} complete Whether the basket is complete
  * @param {number} id The ID of the basket
- * @param {string} count The count of the basket
+ * @param {string} country The country of the basket
  * @param {string} ip The IP address of the user
  * @param {string | null} username_id The ID of the user
  * @param {string | null} username The username of the user
+ * @param {string} cancel_url The cancel url of the basket
+ * @param {string} complete_url The complete url of the basket
+ * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
  * @param {number} base_price The base price of the basket
  * @param {number} sales_tax The sales tax of the basket
  * @param {number} total_price The total price of the basket
+ * @param {string} currency The currency of the basket
  * @param {BasketPackage[]} packages The packages in the basket
  * @param {Code[]} coupons The coupons in the basket
  * @param {GiftCardCode[]} giftcards The giftcards in the basket
  * @param {string} creator_code The creator code of the basket
  * @param {Links} links The links of the basket
+ * @param {KeyValuePair<string, any>} custom The custom object of the basket
  */
 export interface Basket {
     ident: string,
     complete: boolean,
     id: number,
-    count: string,
+    country: string,
     ip: string,
     username_id: string | null,
     username: string | null,
+    cancel_url: string,
+    complete_url: string,
+    complete_auto_redirect: boolean,
     base_price: number,
     sales_tax: number,
     total_price: number,
+    currency: string,
     packages: BasketPackage[],
     coupons: Code[],
     giftcards: GiftCardCode[],
     creator_code: string,
-    links: Links
+    links: Links,
+    custom: KeyValuePair<string, any>
 }
 
 /**
@@ -496,12 +524,40 @@ export type Urls = {
  * 
  * @param {string} complete_url The complete url
  * @param {string} cancel_url The cancel url
+ * @param {KeyValuePair<string, any>} custom The custom object of the basket
+ * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
  * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string, custom: KeyValuePair<string, any>, complete_auto_redirect: boolean, ip_address?: string): Promise<Basket> {
+export async function CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
+        complete_url,
+        cancel_url,
+        custom,
+        complete_auto_redirect,
+        ip_address
+    });
+    
+    return data;
+}
+
+/**
+ * @function CreateMinecraftBasket
+ * @description A function to create a minecraft basket from the Tebex Headless API
+ * 
+ * @param {string} username The username of the user
+ * @param {string} complete_url The complete url
+ * @param {string} cancel_url The cancel url
+ * @param {KeyValuePair<string, any>} custom The custom object of the basket
+ * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
+ * @param {string} ip_address The IP address of the user
+ * 
+ * @returns {Promise<Basket>}
+ */
+export async function CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
+        username,
         complete_url,
         cancel_url,
         custom,
