@@ -314,7 +314,7 @@ export async function Remove<T extends ApplyType, A extends ApplyTypeToInterface
  * @param {string} subscription The subscription type
  * @param {string} single The single type
  */
-export type PackageType = "subscription" | "single";
+export type PackageType = "subscription" | "single" | "both";
 
 /**
  * @interface Package
