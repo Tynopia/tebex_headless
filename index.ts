@@ -149,16 +149,6 @@ export interface CreatorCode {
 }
 
 /**
- * @interface IPAddress
- * @description The IP address object for the body of the request
- * 
- * @param {string} ip_address The IP address of the user
- */
-export interface IPAddress {
-    ip_address?: string
-}
-
-/**
  * @function Request
  * @description A function to make a request to the Tebex Headless API
  * 
@@ -195,6 +185,8 @@ export async function Request<T, Body>(method: Method, identifier: string | null
         }
     }
 
+    console.log(config.url)
+
     const response = await axios.request<T>(config);
 
     return response.data;
@@ -226,16 +218,16 @@ export type Category = BaseItem & {
  * 
  * @param {boolean} includePackages Whether to include the packages in the categories
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Category[]>}
  */
-export async function GetCategories(includePackages?: boolean, basketIdent?: string, ip_address?: string): Promise<Category[]> {
+export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
     const { data }: Data<Category[]> = await Request("get", webstoreIdentifier, "accounts", "/categories", {
         includePackages,
         basketIdent
     }, {
-        ip_address
+        ipAddress
     })
     
     return data;
@@ -248,16 +240,16 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
  * @param {number} id The ID of the category
  * @param {boolean} includePackages Whether to include the packages in the category
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Category>}
  */
-export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ip_address?: string): Promise<Category> {
+export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
     const { data }: Data<Category> = await Request("get", webstoreIdentifier, "accounts", `/categories/${id}`, {
         includePackages,
         basketIdent
     }, {
-        ip_address
+        ipAddress
     })
 
     return data;
@@ -359,15 +351,15 @@ export type Package = BaseItem & {
  * 
  * @param {number} id The ID of the package
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Package>}
  */
-export async function GetPackage(id: number, basketIdent?: string, ip_address?: string): Promise<Package> {
+export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
     const { data }: Data<Package> = await Request("get", webstoreIdentifier, "accounts", `/packages/${id}`, {
         basketIdent
     }, {
-        ip_address
+        ipAddress
     })
 
     return data;
@@ -378,15 +370,15 @@ export async function GetPackage(id: number, basketIdent?: string, ip_address?: 
  * @description A function to get all packages from the Tebex Headless API
  * 
  * @param {string} basketIdent The identifier of the basket
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Package[]>}
  */
-export async function GetPackages(basketIdent?: string, ip_address?: string): Promise<Package[]> {
+export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
     const { data }: Data<Package[]> = await Request("get", webstoreIdentifier, "accounts", `/packages`, {
         basketIdent
     }, {
-        ip_address
+        ipAddress
     })
 
     return data;
@@ -526,17 +518,17 @@ export type Urls = {
  * @param {string} cancel_url The cancel url
  * @param {KeyValuePair<string, any>} custom The custom object of the basket
  * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
+export async function CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
         complete_url,
         cancel_url,
         custom,
         complete_auto_redirect,
-        ip_address
+        ipAddress
     });
     
     return data;
@@ -551,18 +543,18 @@ export async function CreateBasket(complete_url: string, cancel_url: string, cus
  * @param {string} cancel_url The cancel url
  * @param {KeyValuePair<string, any>} custom The custom object of the basket
  * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
- * @param {string} ip_address The IP address of the user
+ * @param {string} ipAddress The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
+export async function CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
         username,
         complete_url,
         cancel_url,
         custom,
         complete_auto_redirect,
-        ip_address
+        ipAddress
     });
     
     return data;
