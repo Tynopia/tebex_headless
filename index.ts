@@ -185,8 +185,6 @@ export async function Request<T, Body>(method: Method, identifier: string | null
         }
     }
 
-    console.log(config.url)
-
     const response = await axios.request<T>(config);
 
     return response.data;
@@ -225,8 +223,7 @@ export type Category = BaseItem & {
 export async function GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category[]> {
     const { data }: Data<Category[]> = await Request("get", webstoreIdentifier, "accounts", "/categories", {
         includePackages,
-        basketIdent
-    }, {
+        basketIdent,
         ipAddress
     })
     
@@ -247,8 +244,7 @@ export async function GetCategories(includePackages?: boolean, basketIdent?: str
 export async function GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string): Promise<Category> {
     const { data }: Data<Category> = await Request("get", webstoreIdentifier, "accounts", `/categories/${id}`, {
         includePackages,
-        basketIdent
-    }, {
+        basketIdent,
         ipAddress
     })
 
@@ -357,8 +353,7 @@ export type Package = BaseItem & {
  */
 export async function GetPackage(id: number, basketIdent?: string, ipAddress?: string): Promise<Package> {
     const { data }: Data<Package> = await Request("get", webstoreIdentifier, "accounts", `/packages/${id}`, {
-        basketIdent
-    }, {
+        basketIdent,
         ipAddress
     })
 
@@ -376,8 +371,7 @@ export async function GetPackage(id: number, basketIdent?: string, ipAddress?: s
  */
 export async function GetPackages(basketIdent?: string, ipAddress?: string): Promise<Package[]> {
     const { data }: Data<Package[]> = await Request("get", webstoreIdentifier, "accounts", `/packages`, {
-        basketIdent
-    }, {
+        basketIdent,
         ipAddress
     })
 
@@ -518,17 +512,18 @@ export type Urls = {
  * @param {string} cancel_url The cancel url
  * @param {KeyValuePair<string, any>} custom The custom object of the basket
  * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
+export async function CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {
+        ip_address
+    }, {
         complete_url,
         cancel_url,
         custom,
-        complete_auto_redirect,
-        ipAddress
+        complete_auto_redirect
     });
     
     return data;
@@ -543,18 +538,19 @@ export async function CreateBasket(complete_url: string, cancel_url: string, cus
  * @param {string} cancel_url The cancel url
  * @param {KeyValuePair<string, any>} custom The custom object of the basket
  * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
- * @param {string} ipAddress The IP address of the user
+ * @param {string} ip_address The IP address of the user
  * 
  * @returns {Promise<Basket>}
  */
-export async function CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string): Promise<Basket> {
-    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {}, {
+export async function CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string): Promise<Basket> {
+    const { data }: Data<Basket> = await Request("post", webstoreIdentifier, "accounts", "/baskets", {
+        ip_address
+    }, {
         username,
         complete_url,
         cancel_url,
         custom,
-        complete_auto_redirect,
-        ipAddress
+        complete_auto_redirect
     });
     
     return data;
