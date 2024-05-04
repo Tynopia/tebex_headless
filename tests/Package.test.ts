@@ -1,7 +1,6 @@
-import { GetPackage } from "..";
-import { GetWebstore } from "..";
+import { GetPackage, Package } from "..";
 
-const keys = [
+const keys: Array<keyof Package> = [
     "id",
     "name",
     "description",
@@ -21,7 +20,7 @@ const keys = [
 ]
 
 const ip = process.env.IP_ADDRESS;
-const package_id = parseInt(process.env.PACKAGE_ID || "0");
+const package_id = parseInt(process.env.PACKAGE_ID!);
 
 test("testPackageStructure", async () => {
     const _package = await GetPackage(package_id, undefined, ip);

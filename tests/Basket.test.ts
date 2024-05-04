@@ -1,6 +1,6 @@
 import { CreateBasket, CreateMinecraftBasket, Basket, UpdateQuantity, AddPackageToBasket, RemovePackage, GiftPackage, Apply, Remove } from "..";
 
-const keys = [
+const keys: Array<keyof Basket> = [
     "ident",
     "complete",
     "id",
@@ -32,8 +32,8 @@ const custom = {
 const username = "test";
 const username_id = "c53db9316d2d489996d183975a99eb6d";
 
-const card_number = process.env.CARD_NUMBER ?? "";
-const package_id = parseInt(process.env.PACKAGE_ID || "0");
+const card_number = process.env.CARD_NUMBER;
+const package_id = parseInt(process.env.PACKAGE_ID!);
 const quantity = 7;
 
 let testBasket: Basket;
@@ -126,7 +126,7 @@ describe("Basket Tests", () => {
 
     test("testBasketApplyGiftCard", async () => {
         const response = await Apply(testBasket.ident, "giftcards", {
-            card_number: card_number
+            card_number: card_number!
         })
 
         expect(response.success).toEqual(true)
@@ -135,7 +135,7 @@ describe("Basket Tests", () => {
 
     test("testBasketRemoveGiftCard", async () => {
         const response = await Remove(testBasket.ident, "giftcards", {
-            card_number: card_number
+            card_number: card_number!
         })
 
         expect(response.success).toEqual(true)

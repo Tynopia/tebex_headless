@@ -1,6 +1,6 @@
-import { GetWebstore } from "..";
+import { GetWebstore, Webstore } from "..";
 
-const keys = [
+const keys: Array<keyof Webstore> = [
     "id",
     "name",
     "description",
@@ -9,6 +9,7 @@ const keys = [
     "lang",
     "logo",
     "platform_type",
+    "platform_type_id",
     "created_at"
 ]
 

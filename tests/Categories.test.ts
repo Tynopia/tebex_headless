@@ -1,6 +1,6 @@
-import { GetCategories } from "..";
+import { Category, GetCategories } from "..";
 
-const keys = [
+const keys: Array<keyof Category> = [
     "id",
     "name",
     "description",
