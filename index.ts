@@ -686,6 +686,7 @@ export async function UpdateQuantity(basketIdent: string, package_id: number, qu
  * @param {string} lang The language of the webstore
  * @param {string} logo The logo of the webstore
  * @param {string} platform_type The platform type of the webstore
+ * @param {number} platform_type_id The platform type ID of the webstore
  * @param {string} created_at The date the webstore was created
  */
 export interface Webstore {
@@ -697,6 +698,7 @@ export interface Webstore {
     lang: string,
     logo: string,
     platform_type: string,
+    platform_type_id: number,
     created_at: string
 }
 
