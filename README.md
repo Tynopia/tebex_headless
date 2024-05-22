@@ -26,10 +26,10 @@ SetWebstoreIdentifier("your_public_token")
 
 ```typescript
 // Get all categories of the webstore
-async GetCategories(includePackages?: boolean, basketIdent?: string, ip_address?: string)
+async GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string)
 
 // Get a specific category by an id
-async GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ip_address?: string)
+async GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string)
 
 // Apply a coupon, gift card, or creator code
 async Apply<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
@@ -38,19 +38,19 @@ async Apply<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent:
 async Remove<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
 
 // Get a specific package by an id inside a basket
-async GetPackage(id: number, basketIdent?: string, ip_address?: string)
+async GetPackage(id: number, basketIdent?: string, ipAddress?: string)
 
 // Get all packages of the webstore inside a basket
-async GetPackages(basketIdent?: string, ip_address?: string)
+async GetPackages(basketIdent?: string, ipAddress?: string)
 
 // Get a basket by an identifier
 async GetBasket(basketIdent: string)
 
 // Create a basket and provide complete and cancel URLs
-async CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string)
+async CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
 
 // Create a minecraft basket and provide a username
-async CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ip_address?: string)
+async CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
 
 // Get all auth URLs by a basket
 async GetBasketAuthUrl(basketIdent: string, returnUrl: string)
