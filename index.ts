@@ -201,13 +201,15 @@ export async function Request<T, Body>(method: Method, identifier: string | null
  * @param {number} order The order of the category
  * @param {Package[]} packages The packages in the category
  * @param {"grid" | "list" | string} display_type The display type of the category
+ * @param {string | null} slug The slug of the category
  */
 export type Category = BaseItem & {
     description: string,
     parent: Category | null,
     order: number,
     packages: Package[],
-    display_type: "grid" | "list"
+    display_type: "grid" | "list",
+    slug: string | null
 }
 
 /**

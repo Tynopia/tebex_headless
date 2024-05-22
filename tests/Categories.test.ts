@@ -7,7 +7,8 @@ const keys: Array<keyof Category> = [
     "parent",
     "order",
     "packages",
-    "display_type"
+    "display_type",
+    "slug"
 ]
 
 test("testCategoriesStructure", async () => {
