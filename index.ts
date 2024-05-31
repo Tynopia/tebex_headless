@@ -448,6 +448,7 @@ export interface Links {
  * @param {number} base_price The base price of the basket
  * @param {number} sales_tax The sales tax of the basket
  * @param {number} total_price The total price of the basket
+ * @param {string} email The email of the basket
  * @param {string} currency The currency of the basket
  * @param {BasketPackage[]} packages The packages in the basket
  * @param {Code[]} coupons The coupons in the basket
@@ -470,6 +471,7 @@ export interface Basket {
     base_price: number,
     sales_tax: number,
     total_price: number,
+    email: string,
     currency: string,
     packages: BasketPackage[],
     coupons: Code[],

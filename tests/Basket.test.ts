@@ -14,6 +14,7 @@ const keys: Array<keyof Basket> = [
     "base_price",
     "sales_tax",
     "total_price",
+    "email",
     "currency",
     "packages",
     "coupons",
