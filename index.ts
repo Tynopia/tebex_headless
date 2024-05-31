@@ -611,7 +611,7 @@ export interface PackageBody {
  * 
  * @returns {Promise<Basket>}
  */
-export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type: PackageType, variable_data?: KeyValuePair<string, any>): Promise<Basket> {
+export async function AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type?: PackageType, variable_data?: KeyValuePair<string, any>): Promise<Basket> {
     const { data }: Data<Basket> = await Request("post", basketIdent, "baskets", "/packages", {}, {
         package_id,
         quantity,
