@@ -17,58 +17,58 @@ npm install tebex_headless
 3. Start using the Tebex Headless API in your Node.js TypeScript application!
 
 ```typescript
-import { SetWebstoreIdentifier } from "tebex_headless";
+import { TebexHeadless } from "tebex_headless";
 
-SetWebstoreIdentifier("your_public_token")
+const tebexHeadless = new TebexHeadless(webstoreIdentifier);
 ```
 
 ## Functions
 
 ```typescript
-// Get all categories of the webstore
-async GetCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string)
+// A function to get the categories from the Tebex Headless API
+async TebexHeadless::getCategories(includePackages?: boolean, basketIdent?: string, ipAddress?: string)
 
-// Get a specific category by an id
-async GetCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string)
+// A function to get a category from the Tebex Headless API
+async TebexHeadless::getCategory(id: number, includePackages?: boolean, basketIdent?: string, ipAddress?: string)
 
-// Apply a coupon, gift card, or creator code
-async Apply<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
+// A function to apply a coupon, giftcard or creator code to a basket
+async TebexHeadless::apply<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
 
-// Remove a coupon, gift card, or creator code
-async Remove<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
+// A function to remove a coupon, giftcard or creator code from a basket
+async TebexHeadless::remove<T extends ApplyType, A extends ApplyTypeToInterface<T>>(basketIdent: string, type: T, body: A)
 
-// Get a specific package by an id inside a basket
-async GetPackage(id: number, basketIdent?: string, ipAddress?: string)
+// A function to get a package from the Tebex Headless API
+async TebexHeadless::getPackage(id: number, basketIdent?: string, ipAddress?: string)
 
-// Get all packages of the webstore inside a basket
-async GetPackages(basketIdent?: string, ipAddress?: string)
+// A function to get all packages from the Tebex Headless API
+async TebexHeadless::getPackages(basketIdent?: string, ipAddress?: string)
 
-// Get a basket by an identifier
-async GetBasket(basketIdent: string)
+// A function to get a basket from the Tebex Headless API
+async TebexHeadless::getBasket(basketIdent: string)
 
-// Create a basket and provide complete and cancel URLs
-async CreateBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
+// A function to create a basket from the Tebex Headless API
+async TebexHeadless::createBasket(complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
 
-// Create a minecraft basket and provide a username
-async CreateMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
+// A function to create a minecraft basket from the Tebex Headless API
+async TebexHeadless::createMinecraftBasket(username: string, complete_url: string, cancel_url: string, custom?: KeyValuePair<string, any>, complete_auto_redirect?: boolean, ipAddress?: string)
 
-// Get all auth URLs by a basket
-async GetBasketAuthUrl(basketIdent: string, returnUrl: string)
+// A function to get the auth url of a basket from the Tebex Headless API
+async TebexHeadless::getBasketAuthUrl(basketIdent: string, returnUrl: string)
 
-// Add a package to a specific basket
-AddPackageToBasket(basketIdent: string, package_id: number, quantity: number, type?: PackageType, variable_data?: KeyValuePair<string, any>)
+// A function to add a package to a basket from the Tebex Headless API
+TebexHeadless::addPackageToBasket(basketIdent: string, package_id: number, quantity: number, type?: PackageType, variable_data?: KeyValuePair<string, any>)
 
-// Gift a package to a target user
-async GiftPackage(basketIdent: string, package_id: number, target_username_id: string)
+// A function to gift a package to a user from the Tebex Headless API
+async TebexHeadless::giftPackage(basketIdent: string, package_id: number, target_username_id: string)
 
-// Remove a package inside a specific basket and package_id
-async RemovePackage(basketIdent: string, package_id: number)
+// A function to remove a package from a basket from the Tebex Headless API
+async TebexHeadless::removePackage(basketIdent: string, package_id: number)
 
-// Update the quantity of a package inside a basket
-async UpdateQuantity(basketIdent: string, package_id: number, quantity: number)
+// A function to update the quantity of a package in a basket from the Tebex Headless API
+async TebexHeadless::updateQuantity(basketIdent: string, package_id: number, quantity: number)
 
-// Get webstore information by the public token
-async GetWebstore()
+// A function to get the webstore from the Tebex Headless API
+async TebexHeadless::getWebstore()
 ```
 
 ## Features
@@ -84,10 +84,9 @@ If a store uses its own backend but wants to use the IP addresses of the users i
 [Check our following Link to generate a private key](https://creator.tebex.io/developers/api-keys)
 
 ```typescript
-import { SetWebstoreIdentifier, SetPrivateKey } from "tebex_headless";
+import { TebexHeadless } from "tebex_headless";
 
-SetWebstoreIdentifier("your_public_token")
-SetPrivateKey("your_private_key")
+const tebexHeadless = new TebexHeadless(webstoreIdentifier, privateKey);
 ```
 
 ## Contributing

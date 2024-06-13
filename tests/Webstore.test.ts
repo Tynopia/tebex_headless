@@ -1,4 +1,4 @@
-import { GetWebstore, Webstore } from "..";
+import { Webstore } from "..";
 
 const keys: Array<keyof Webstore> = [
     "id",
@@ -14,6 +14,6 @@ const keys: Array<keyof Webstore> = [
 ]
 
 test("testWebstoreStructure", async () => {
-    const webstore = await GetWebstore();
+    const webstore = await global.tebexHeadless.getWebstore();
     expect(Object.keys(webstore).sort()).toEqual(keys.sort())
 })

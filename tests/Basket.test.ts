@@ -1,4 +1,4 @@
-import { CreateBasket, CreateMinecraftBasket, Basket, UpdateQuantity, AddPackageToBasket, RemovePackage, GiftPackage, Apply, Remove } from "..";
+import { Basket } from "..";
 
 const keys: Array<keyof Basket> = [
     "ident",
@@ -40,7 +40,7 @@ const quantity = 7;
 let testBasket: Basket;
 
 beforeAll(async () => {
-    testBasket = await CreateBasket(url, url, custom, true, ip);
+    testBasket = await global.tebexHeadless.createBasket(url, url, custom, true, ip);
 });
 
 describe("Basket Tests", () => {
@@ -54,14 +54,14 @@ describe("Basket Tests", () => {
     })
 
     test("testMinecraftBasket", async () => {
-        testBasket = await CreateMinecraftBasket(username, url, url, custom, true, ip);
+        testBasket = await global.tebexHeadless.createMinecraftBasket(username, url, url, custom, true, ip);
         
         expect(testBasket).toBeDefined()
         expect(testBasket.username).toEqual(username.charAt(0).toUpperCase() + username.slice(1))
     })
 
     test("testBasketAddPackageToBasket", async () => {
-        testBasket = await AddPackageToBasket(testBasket.ident, package_id, quantity, "single")
+        testBasket = await global.tebexHeadless.addPackageToBasket(testBasket.ident, package_id, quantity, "single")
 
         expect(testBasket.packages[0]).toBeDefined()
         expect(testBasket.packages[0]!.id).toEqual(package_id)
@@ -69,27 +69,27 @@ describe("Basket Tests", () => {
     })
 
     test("testBasketUpdateQuantity", async () => {
-        testBasket = await UpdateQuantity(testBasket.ident, package_id, quantity * 2)
+        testBasket = await global.tebexHeadless.updateQuantity(testBasket.ident, package_id, quantity * 2)
 
         expect(testBasket.packages[0]).toBeDefined()
         expect(testBasket.packages[0]!.in_basket.quantity).toEqual(quantity * 2)
     })
 
     test("testBasketRemovePackage", async () => {
-        testBasket = await RemovePackage(testBasket.ident, package_id)
+        testBasket = await global.tebexHeadless.removePackage(testBasket.ident, package_id)
 
         expect(testBasket.packages[0]).toBeUndefined()
     })
 
     test("testBasketGiftPackage", async () => {
-        testBasket = await GiftPackage(testBasket.ident, package_id, username_id)
+        testBasket = await global.tebexHeadless.giftPackage(testBasket.ident, package_id, username_id)
 
         expect(testBasket.packages[0]).toBeDefined()
         expect(testBasket.packages[0]!.in_basket.gift_username_id).toEqual(username_id)
     })
 
     test("testBasketApplyCoupon", async () => {
-        const response = await Apply(testBasket.ident, "coupons", {
+        const response = await global.tebexHeadless.apply(testBasket.ident, "coupons", {
             coupon_code: "test"
         })
 
@@ -108,7 +108,7 @@ describe("Basket Tests", () => {
     })*/
 
     test("testBasketAppyCreatorCode", async () => {
-        const response = await Apply(testBasket.ident, "creator-codes", {
+        const response = await global.tebexHeadless.apply(testBasket.ident, "creator-codes", {
             creator_code: "test"
         })
 
@@ -117,7 +117,7 @@ describe("Basket Tests", () => {
     })
 
     test("testBasketRemoveCreatorCode", async () => {
-        const response = await Remove(testBasket.ident, "creator-codes", {
+        const response = await global.tebexHeadless.remove(testBasket.ident, "creator-codes", {
             creator_code: "test"
         })
 
@@ -126,7 +126,7 @@ describe("Basket Tests", () => {
     })
 
     test("testBasketApplyGiftCard", async () => {
-        const response = await Apply(testBasket.ident, "giftcards", {
+        const response = await global.tebexHeadless.apply(testBasket.ident, "giftcards", {
             card_number: card_number!
         })
 
@@ -135,7 +135,7 @@ describe("Basket Tests", () => {
     })
 
     test("testBasketRemoveGiftCard", async () => {
-        const response = await Remove(testBasket.ident, "giftcards", {
+        const response = await global.tebexHeadless.remove(testBasket.ident, "giftcards", {
             card_number: card_number!
         })
 

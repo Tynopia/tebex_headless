@@ -1,4 +1,4 @@
-import { GetPackage, Package } from "..";
+import { Package } from "..";
 
 const keys: Array<keyof Package> = [
     "id",
@@ -23,6 +23,6 @@ const ip = process.env.IP_ADDRESS;
 const package_id = parseInt(process.env.PACKAGE_ID!);
 
 test("testPackageStructure", async () => {
-    const _package = await GetPackage(package_id, undefined, ip);
+    const _package = await global.tebexHeadless.getPackage(package_id, undefined, ip);
     expect(Object.keys(_package).sort()).toEqual(keys.sort())
 })

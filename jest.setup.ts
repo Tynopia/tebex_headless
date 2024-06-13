@@ -1,6 +1,12 @@
-import { SetWebstoreIdentifier, SetPrivateKey } from "./dist";
+import { TebexHeadless } from "./dist";
 
-require('dotenv').config();
+declare global {
+    var tebexHeadless: TebexHeadless;
+}
 
-SetWebstoreIdentifier(process.env.WEBSTORE_IDENTIFIER!);
-SetPrivateKey(process.env.PRIVATE_KEY!);
+require("dotenv").config();
+
+global.tebexHeadless = new TebexHeadless(
+    process.env.WEBSTORE_IDENTIFIER!,
+    process.env.PRIVATE_KEY!
+);

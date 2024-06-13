@@ -1,4 +1,4 @@
-import { Category, GetCategories } from "..";
+import { Category } from "..";
 
 const keys: Array<keyof Category> = [
     "id",
@@ -12,7 +12,7 @@ const keys: Array<keyof Category> = [
 ]
 
 test("testCategoriesStructure", async () => {
-    const categories = await GetCategories();
+    const categories = await global.tebexHeadless.getCategories();
     const category = categories[0];
 
     expect(category).toBeDefined()
