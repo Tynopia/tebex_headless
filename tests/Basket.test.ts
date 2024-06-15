@@ -1,4 +1,4 @@
-import { Basket } from "..";
+import { Basket, BasketPackage } from "..";
 
 const keys: Array<keyof Basket> = [
     "ident",
@@ -22,6 +22,14 @@ const keys: Array<keyof Basket> = [
     "creator_code",
     "links",
     "custom"
+]
+
+const basketPackageKeys: Array<keyof BasketPackage> = [
+    "description",
+    "id",
+    "in_basket",
+    "name",
+    "image"
 ]
 
 const ip = process.env.IP_ADDRESS;
@@ -66,6 +74,10 @@ describe("Basket Tests", () => {
         expect(testBasket.packages[0]).toBeDefined()
         expect(testBasket.packages[0]!.id).toEqual(package_id)
         expect(testBasket.packages[0]!.in_basket.quantity).toEqual(quantity)
+    })
+
+    test("testBasketPackageStructure", async () => {
+        expect(Object.keys(testBasket.packages[0]!).sort()).toEqual(basketPackageKeys.sort())
     })
 
     test("testBasketUpdateQuantity", async () => {

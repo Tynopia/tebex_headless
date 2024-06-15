@@ -269,10 +269,12 @@ export interface InBasket {
  * @param {string} name The name of the package
  * @param {string} description The description of the package
  * @param {InBasket} in_basket The in_basket object inside the basket package object
+ * @param {string | null} image The image of the package
  */
 export type BasketPackage = BaseItem & {
     description: string;
     in_basket: InBasket;
+    image: string | null;
 };
 
 /**
@@ -417,7 +419,7 @@ export interface Webstore {
 export class TebexHeadless {
     constructor(
         /**
-         * @function SetWebstoreIdentifier
+         * @constant webstoreIdentifier
          * @description A function to set the webstore identifier
          *
          * @param {string} identifier The identifier of the webstore
@@ -426,7 +428,7 @@ export class TebexHeadless {
          */
         readonly webstoreIdentifier: string,
         /**
-         * @function SetPrivateKey
+         * @private {privateKey}
          * @description A function to set the private key
          *
          * @param {string} key The private key of the webstore
