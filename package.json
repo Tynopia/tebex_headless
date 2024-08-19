@@ -12,10 +12,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/grp-gg/tebex_headless.git"
+        "url": "git+https://github.com/Tynopia/tebex_headless.git"
     },
     "keywords": [
-        "grp-gg",
+        "Tynopia",
         "tebex",
         "headless",
         "api",
@@ -24,9 +24,9 @@
     "author": "Tynopia / Lukas Leisten",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/grp-gg/tebex_headless/issues"
+        "url": "https://github.com/Tynopia/tebex_headless/issues"
     },
-    "homepage": "https://github.com/grp-gg/tebex_headless#readme",
+    "homepage": "https://github.com/Tynopia/tebex_headless#readme",
     "devDependencies": {
         "@babel/preset-typescript": "^7.23.3",
         "@babel/preset-env": "^7.23.6",
