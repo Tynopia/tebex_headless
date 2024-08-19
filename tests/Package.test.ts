@@ -16,7 +16,8 @@ const keys: Array<keyof Package> = [
     "discount",
     "image",
     "created_at",
-    "updated_at"
+    "updated_at",
+    "order"
 ]
 
 const ip = process.env.IP_ADDRESS;

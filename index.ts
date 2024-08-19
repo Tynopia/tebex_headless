@@ -227,6 +227,7 @@ export type PackageType = "subscription" | "single" | "both";
  * @param {string | null} image The image of the package
  * @param {string} created_at The date the package was created
  * @param {string} updated_at The date the package was updated
+ * @param {number} order The order this package should be sorted in
  */
 export type Package = BaseItem & {
     description: string;
@@ -243,6 +244,7 @@ export type Package = BaseItem & {
     image: string | null;
     created_at: string;
     updated_at: string;
+    order: number;
 };
 
 /**
