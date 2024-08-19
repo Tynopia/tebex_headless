@@ -9,23 +9,23 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 const baseUrl: string = "https://headless.tebex.io";
 
 /**
- * @interface Data
+ * @type {Data}
  * @description The data returned from the Tebex Headless API
  *
  * @type {T} The type of data to be returned
  */
-export interface Data<T> {
+export type Data<T> = {
     data: T;
 }
 
 /**
- * @interface Message
+ * @type {Message}
  * @description The message returned from the Tebex Headless API
  *
  * @param {boolean} success Whether the request was successful
  * @param {string} message The message returned from the Tebex Headless API
  */
-export interface Message {
+export type Message = {
     success: boolean;
     message: string;
 }
@@ -67,44 +67,44 @@ export type KeyValuePair<K extends string | number, V> = {
 };
 
 /**
- * @interface BaseItem
+ * @type {BaseItem}
  * @description The base item object for the package and category objects
  *
  * @param {number} id The ID of the base item
  * @param {string} name The name of the base item
  */
-export interface BaseItem {
+export type BaseItem = {
     id: number;
     name: string;
 }
 
 /**
- * @interface CouponCodeBody
+ * @type {CouponCodeBody}
  * @description The coupon code object for the body of the request
  *
  * @param {string} coupon_code The coupon code to apply or remove
  */
-export interface CouponCode {
+export type CouponCode = {
     coupon_code: string;
 }
 
 /**
- * @interface GiftCardCodeBody
+ * @type {GiftCardCodeBody}
  * @description The gift card code object for the body of the request
  *
  * @param {string} card_number The gift card code to apply or remove
  */
-export interface GiftCardCode {
+export type GiftCardCode = {
     card_number: string;
 }
 
 /**
- * @interface CreatorCodeBody
+ * @type {CreatorCodeBody}
  * @description The creator code object for the body of the request
  *
  * @param {string} creator_code The creator code to apply or remove
  */
-export interface CreatorCode {
+export type CreatorCode = {
     creator_code: string;
 }
 
@@ -160,7 +160,7 @@ export async function Request<T, Body>(
 }
 
 /**
- * @interface Category
+ * @type {Category}
  * @description The category object returned from the Tebex Headless API
  *
  * @param {number} id The ID of the category
@@ -209,7 +209,7 @@ export type ApplyTypeToInterface<T extends ApplyType> = T extends "coupons"
 export type PackageType = "subscription" | "single" | "both";
 
 /**
- * @interface Package
+ * @type {Package}
  * @description The package object returned from the Tebex Headless API
  *
  * @param {number} id The ID of the package
@@ -246,7 +246,7 @@ export type Package = BaseItem & {
 };
 
 /**
- * @interface InBasket
+ * @type {InBasket}
  * @description The in_basket object inside a basket package object
  *
  * @param {number} quantity The quantity of the package in the basket
@@ -254,7 +254,7 @@ export type Package = BaseItem & {
  * @param {string | null} gift_username_id The ID of the user the package is gifted to
  * @param {string | null} gift_username The username of the user the package is gifted to
  */
-export interface InBasket {
+export type InBasket = {
     quantity: number;
     price: number;
     gift_username_id: string | null;
@@ -262,7 +262,7 @@ export interface InBasket {
 }
 
 /**
- * @interface BasketPackage
+ * @type {BasketPackage}
  * @description The basket package object returned from the Tebex Headless API
  *
  * @param {number} id The ID of the package
@@ -278,28 +278,28 @@ export type BasketPackage = BaseItem & {
 };
 
 /**
- * @interface Code
+ * @type {Code}
  * @description The code object inside the basket coupons object
  *
  * @param {string} code The code of the object
  */
-export interface Code {
+export type Code = {
     code: string;
 }
 
 /**
- * @interface Links
+ * @type {Links}
  * @description The links object inside the basket object
  *
  * @param {string} checkout The checkout link of the basket
  */
-export interface Links {
+export type Links = {
     checkout: string;
     [key: string]: string;
 }
 
 /**
- * @interface Basket
+ * @type {Basket}
  * @description The basket object returned from the Tebex Headless API
  *
  * @param {string} ident The identifier of the basket
@@ -324,7 +324,7 @@ export interface Links {
  * @param {Links} links The links of the basket
  * @param {KeyValuePair<string, any>} custom The custom object of the basket
  */
-export interface Basket {
+export type Basket = {
     ident: string;
     complete: boolean;
     id: number;
@@ -363,33 +363,33 @@ export type Urls = {
 };
 
 /**
- * @interface AuthUrl
+ * @type {AuthUrl}
  * @description The auth url object returned from the Tebex Headless API
  *
  * @param {string} name The name of the auth url
  * @param {string} url The url of the auth url
  */
-export interface AuthUrl {
+export type AuthUrl = {
     name: string;
     url: string;
 }
 
 /**
- * @interface PackageBody
+ * @type {PackageBody}
  * @description The package object for the body of the request
  *
  * @param {number} package_id The ID of the package
  * @param {number} quantity The quantity of the package
  * @param {PackageType} type The type of the package
  */
-export interface PackageBody {
+export type PackageBody = {
     package_id: number;
     quantity: number;
     type: PackageType;
 }
 
 /**
- * @interface Webstore
+ * @type {Webstore}
  * @description The webstore object returned from the Tebex Headless API
  *
  * @param {number} id The ID of the webstore
@@ -403,7 +403,7 @@ export interface PackageBody {
  * @param {number} platform_type_id The platform type ID of the webstore
  * @param {string} created_at The date the webstore was created
  */
-export interface Webstore {
+export type Webstore = {
     id: number;
     description: string;
     name: string;
@@ -895,7 +895,7 @@ export class TebexHeadless {
     }
 
     /**
-     * @interface updateTier
+     * @function updateTier
      * @description Update an tier of an package
      *
      * @param {unknown} tierId The ID of the tier
