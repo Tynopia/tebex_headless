@@ -1,4 +1,4 @@
-import { Page } from "..";
+import { Page } from "@custom-types/Page";
 
 const keys: Array<keyof Page> = [
     "id",

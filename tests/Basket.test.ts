@@ -1,4 +1,5 @@
-import { Basket, BasketPackage } from "..";
+import { Basket } from "@custom-types/Basket/Basket";
+import { BasketPackage } from "@custom-types/Basket/BasketPackage";
 
 const keys: Array<keyof Basket> = [
     "ident",

@@ -1,4 +1,4 @@
-import { Category } from "..";
+import { Category } from "@custom-types/Category";
 
 const keys: Array<keyof Category> = [
     "id",

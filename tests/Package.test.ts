@@ -1,4 +1,4 @@
-import { Package } from "..";
+import { Package } from "@custom-types/Package/Package";
 
 const keys: Array<keyof Package> = [
     "id",

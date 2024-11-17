@@ -1,4 +1,4 @@
-import { Webstore } from "..";
+import { Webstore } from "@custom-types/Webstore";
 
 const keys: Array<keyof Webstore> = [
     "id",
