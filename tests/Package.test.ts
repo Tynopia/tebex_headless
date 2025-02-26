@@ -17,6 +17,7 @@ const keys: Array<keyof Package> = [
     "image",
     "created_at",
     "updated_at",
+    "variables",
     "order"
 ]
 

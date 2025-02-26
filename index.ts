@@ -56,17 +56,6 @@ export type Route = "accounts" | "baskets";
 export type ApplyType = "coupons" | "giftcards" | "creator-codes";
 
 /**
- * @type {KeyValuePair}
- * @description A key value pair
- *
- * @type {K} The type of the key
- * @type {V} The type of the value
- */
-export type KeyValuePair<K extends string | number, V> = {
-    [key in K]: V;
-};
-
-/**
  * @type {BaseItem}
  * @description The base item object for the package and category objects
  *
@@ -115,7 +104,7 @@ export type CreatorCode = {
  * @param {Method | string} method The method of the request
  * @param {Route} route The route of the request
  * @param {string} path The path of the request
- * @param {KeyValuePair<string, GenericObject>} params The parameters of the request
+ * @param {Record<string, GenericObject>} params The parameters of the request
  *
  * @returns {Promise<T>}
  */
@@ -126,7 +115,7 @@ export async function Request<T, Body>(
     identifier: string | null,
     route: Route,
     path?: string,
-    params?: KeyValuePair<string, GenericObject>,
+    params?: Record<string, GenericObject>,
     body?: Body
 ): Promise<T> {
     if (params) {
@@ -227,6 +216,7 @@ export type PackageType = "subscription" | "single" | "both";
  * @param {string | null} image The image of the package
  * @param {string} created_at The date the package was created
  * @param {string} updated_at The date the package was updated
+ * @param {Array<string>} variables The variables referred to in this package
  * @param {number} order The order this package should be sorted in
  */
 export type Package = BaseItem & {
@@ -244,6 +234,7 @@ export type Package = BaseItem & {
     image: string | null;
     created_at: string;
     updated_at: string;
+    variables?: Array<string>
     order: number;
 };
 
@@ -324,7 +315,7 @@ export type Links = {
  * @param {GiftCardCode[]} giftcards The giftcards in the basket
  * @param {string} creator_code The creator code of the basket
  * @param {Links} links The links of the basket
- * @param {KeyValuePair<string, any>} custom The custom object of the basket
+ * @param {Record<string, any>} custom The custom object of the basket
  */
 export type Basket = {
     ident: string;
@@ -347,7 +338,7 @@ export type Basket = {
     giftcards: GiftCardCode[];
     creator_code: string;
     links: Links;
-    custom: KeyValuePair<string, any>;
+    custom: Record<string, any>;
 }
 
 /**
@@ -360,7 +351,7 @@ export type Basket = {
 export type Urls = {
     complete_url: string;
     cancel_url: string;
-    custom?: KeyValuePair<string, any>;
+    custom?: Record<string, any>;
     complete_auto_redirect?: boolean;
 };
 
@@ -676,7 +667,7 @@ export class TebexHeadless {
      *
      * @param {string} complete_url The complete url
      * @param {string} cancel_url The cancel url
-     * @param {KeyValuePair<string, any>} custom The custom object of the basket
+     * @param {Record<string, any>} custom The custom object of the basket
      * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
      * @param {string} ip_address The IP address of the user
      *
@@ -685,7 +676,7 @@ export class TebexHeadless {
     async createBasket(
         complete_url: string,
         cancel_url: string,
-        custom?: KeyValuePair<string, any>,
+        custom?: Record<string, any>,
         complete_auto_redirect?: boolean,
         ip_address?: string
     ): Promise<Basket> {
@@ -717,7 +708,7 @@ export class TebexHeadless {
      * @param {string} username The username of the user
      * @param {string} complete_url The complete url
      * @param {string} cancel_url The cancel url
-     * @param {KeyValuePair<string, any>} custom The custom object of the basket
+     * @param {Record<string, any>} custom The custom object of the basket
      * @param {boolean} complete_auto_redirect Whether the basket should automatically redirect to the complete url
      * @param {string} ip_address The IP address of the user
      *
@@ -727,7 +718,7 @@ export class TebexHeadless {
         username: string,
         complete_url: string,
         cancel_url: string,
-        custom?: KeyValuePair<string, any>,
+        custom?: Record<string, any>,
         complete_auto_redirect?: boolean,
         ip_address?: string
     ): Promise<Basket> {
@@ -787,7 +778,7 @@ export class TebexHeadless {
      * @param {number} package_id The ID of the package
      * @param {number} quantity The quantity of the package
      * @param {PackageType} type The type of the package
-     * @param {KeyValuePair<string, any>} variable_data The variable data of the package
+     * @param {Record<string, any>} variable_data The variable data of the package
      *
      * @returns {Promise<Basket>}
      */
@@ -796,7 +787,7 @@ export class TebexHeadless {
         package_id: number,
         quantity: number,
         type?: PackageType,
-        variable_data?: KeyValuePair<string, any>
+        variable_data?: Record<string, any>
     ): Promise<Basket> {
         const { data }: Data<Basket> = await Request(
             this.webstoreIdentifier,
