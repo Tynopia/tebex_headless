@@ -16,6 +16,7 @@ jobs:
   test:
     name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    environment: production
     strategy:
       matrix:
         node-version: [20, 22]
