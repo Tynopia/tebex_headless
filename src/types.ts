@@ -245,8 +245,10 @@ export type TextboxModule = ModuleBase & {
 export type RecentPayment = {
   username: string;
   username_id: string;
-  amount: number;
-  currency: string;
+  package: { name: string };
+  created_at: string | null;
+  price: number | null;
+  currency: string | null;
 };
 
 export type RecentPaymentsData = {
@@ -285,8 +287,10 @@ export type Players = {
 
 export type ServerStatusData = {
   header: string;
-  address: string;
-  players: Players;
+  hostname: string;
+  port: number;
+  online: boolean;
+  players: Players | null;
 };
 
 export type ServerStatusModule = ModuleBase & {
@@ -296,9 +300,11 @@ export type ServerStatusModule = ModuleBase & {
 
 export type PaymentGoalData = {
   header: string;
-  current: number;
-  target: number;
-  currency: string;
+  percentage: number;
+  bar_style: "normal" | "striped";
+  bar_animated: boolean;
+  total?: number | null;
+  target?: number | null;
 };
 
 export type PaymentGoalModule = ModuleBase & {
@@ -308,8 +314,9 @@ export type PaymentGoalModule = ModuleBase & {
 
 export type CommunityGoalData = {
   header: string;
-  current: number;
-  target: number;
+  bar_style: "normal" | "striped";
+  bar_animated: boolean;
+  percentage: number;
 };
 
 export type CommunityGoalModule = ModuleBase & {
