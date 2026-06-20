@@ -13,12 +13,13 @@
         }
     },
     "scripts": {
-        "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"vitest.*.ts\"",
-        "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"vitest.*.ts\"",
+        "test": "vitest run",
         "test:watch": "vitest",
         "coverage": "vitest run --coverage",
         "build": "tsup src/index.ts --format cjs,esm --dts",
-        "lint": "tsc"
+        "lint": "tsc",
+        "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"vitest.*.ts\"",
+        "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"vitest.*.ts\""
     },
     "repository": {
         "type": "git",
