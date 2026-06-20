@@ -1,0 +1,20 @@
+# Source & tests
+src/
+tests/
+vitest.config.ts
+vitest.setup.ts
+
+# Config files
+.prettierrc
+tsconfig.json
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# GitHub
+.github/
+
+# Misc
+*.tgz
+.env*
