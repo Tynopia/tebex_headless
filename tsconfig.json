@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
-        "module": "CommonJS",
+        "target": "ES2023",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "lib": ["ES2023", "DOM"],
+        "types": ["vitest/globals", "node"],
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
         "noUncheckedIndexedAccess": true,
         "noEmit": true
-    }
+    },
+    "include": ["src", "tests", "vitest.setup.ts", "vitest.config.ts"]
 }
