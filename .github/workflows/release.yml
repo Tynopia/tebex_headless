@@ -13,9 +13,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Build
+        run: npm run build
+
   test:
     name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     environment: production
     strategy:
       matrix:
@@ -33,15 +59,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Format check
-        run: npm run format:check
-
-      - name: Build
-        run: npm run build
-
       - name: Test
         run: npm test
         env:
@@ -53,7 +70,7 @@ jobs:
 
   release:
     name: Release
-    needs: test
+    needs: [lint, test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     permissions:
